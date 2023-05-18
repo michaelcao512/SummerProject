@@ -1,0 +1,11 @@
+.test-component {
+    background-color: #de5a5a;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .test-component p {
+    color: #070d67;
+    font-size: 18px;
+  }
+  
