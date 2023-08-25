@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany } from 'typeorm';
+import { VocabSet } from '../vocab/vocab-set.entity';
 
 @Entity()
 export class User {
@@ -13,4 +14,8 @@ export class User {
 
     @CreateDateColumn({ type: 'timestamp'})
     created_at: Date;
+
+    @OneToMany(() => VocabSet, vocabSet => vocabSet.user)
+    vocabSet: VocabSet[];
+
 }
