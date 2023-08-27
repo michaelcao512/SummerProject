@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne} from 'typeorm';
-import { User } from '../user/user.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
+import { Users } from '../users/users.entity';
 import { Word } from './word.entity';
 
 @Entity()
@@ -10,8 +10,8 @@ export class VocabSet {
     @Column()
     name: string;
 
-    @ManyToOne(() => User, user => user.vocabSet)
-    user: User;
+    @ManyToOne(() => Users, user => user.vocabSet)
+    user: Users;
 
     @OneToMany(() => Word, word => word.vocabSet)
     words: Word[];

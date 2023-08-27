@@ -2,9 +2,9 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany } f
 import { VocabSet } from '../vocab/vocab-set.entity';
 
 @Entity()
-export class User {
+export class Users {
     @PrimaryGeneratedColumn()
-    id: number;
+    userId: number;
     
     @Column({unique: true })
     username: string;
