@@ -1,0 +1,60 @@
+.Login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:0px;
+    margin:0px;
+    width: 100%;
+    height: 100vh;
+}
+
+.LoginBox{
+    margin-top: 8rem;
+    width: 450px;
+    height: 450px;
+    padding: 20px;
+    border:  1px solid white;
+    border-radius: 50px;
+}
+
+.LoginHeader{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Copperplate;
+    font-weight:bold;
+    font-size:50px;
+    padding: 20px;
+}
+
+.LoginBody {
+    padding: 20px;
+    font-family: Copperplate;
+    display: center;
+    align-items: center;
+}
+
+/* .username {
+    width: 100%;
+    height: 40px;
+    border-radius: 6px;
+    border-width: 1;
+}
+
+.password {
+    width: 100%;
+    height: 40px;
+    border-radius: 6px;
+    border-width: 1;
+} */
+
+button {
+    width: 100%;
+    height: 50px;
+    border-radius: 6px;
+    border-width: 1;
+    background-color: #f2daf6;
+    padding: 10px;
+}
