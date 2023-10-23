@@ -20,12 +20,6 @@ export default function Home() {
       {/* <p className="mb-5 text-1xl font-semibold"> Join us to unlock your language potential. Start learning with personalized flashcards.</p> */}
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="new_frontend/app/login/page.tsx"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
           <h2 className={`mb-3 text-2xl font-semibold`}>
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}> </div>
             <Link href='/login'>Login</Link>
@@ -34,16 +28,10 @@ export default function Home() {
             </span>
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}></p>
-        </a>
       </div>
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="new_frontend/app/register/page.tsx"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+
           <h2 className={`mb-3 text-2xl font-semibold`}>
             <Link href='/register'>Sign up</Link>
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
@@ -51,7 +39,6 @@ export default function Home() {
             </span>
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}></p>
-        </a>
       </div>
     </main>
   )
