@@ -1,16 +1,44 @@
-import { Body, Controller, Post, HttpCode, HttpStatus, UseGuards, Get, Request} from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, HttpStatus, UseGuards, Get, Request, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @HttpCode(HttpStatus.OK)
+
+
+
+  @Post('register')
+  async signUp(
+    @Body('username') username: string,
+    @Body('email') email: string,
+    @Body('password') password: string,
+  ) {
+    try {
+      if (!username || !email || !password) {
+        throw new UnauthorizedException("Invalid Input");
+      }
+
+      const user = await this.authService.signUp(username, email, password);
+      return user;
+    } 
+    catch (error) {
+      throw new UnauthorizedException("Invalid Input");
+    }
+
+  }
+
+
+
   @Post('login')
-  signIn(@Body() signInDto: Record<string, any>) {
-    return this.authService.signIn(signInDto.username, signInDto.password);
+  signIn(
+    @Body() username: string,
+    @Body() password: string,
+  ) {
+    return this.authService.signIn(username, password);
   }
 
 

@@ -22,13 +22,7 @@ export default function LoginPage() {
     const[username, setUsername] = useState(''); 
     const[password, setPassword] = useState('');
     
-    const Login = (details: {username:string, password: string} )=> {
-        console.log(details);
-    }
 
-    const Logout = () => {
-        console.log('Logout');
-    }
 
     return (
         <div className="Login">
@@ -40,7 +34,7 @@ export default function LoginPage() {
                     <h2>Welcome, <span>{username}</span></h2>
                     <button>Logout</button>
                 </div>
-            ): (<LoginForm Login={Login} error={Error}/>) }
+            ): (<LoginForm/>) }
 
                 </div>
             </div>

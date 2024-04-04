@@ -5,14 +5,17 @@ import { VocabSet } from '../vocab/vocab-set.entity';
 export class Users {
     @PrimaryGeneratedColumn()
     userId: number;
-    
-    @Column({unique: true })
+
+    @Column({ unique: true })
     username: string;
+
+    @Column({ unique: true })
+    email: string;
     
     @Column()
     password: string;
 
-    @CreateDateColumn({ type: 'timestamp'})
+    @CreateDateColumn({ type: 'timestamp' })
     created_at: Date;
 
     @OneToMany(() => VocabSet, vocabSet => vocabSet.user)
