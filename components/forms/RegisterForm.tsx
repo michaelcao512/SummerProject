@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -113,8 +114,8 @@ function RegisterForm() {
                     <Input type="password" name="password" onChange={handleChange} />
                 </div>
                 <div className="LoginBody"> 
-                    <Link href="/login"> Already have an account? Log in </Link>
                     <Button type="submit" disabled={formState.buttonDisabled}>Register</Button>
+                    <Link href="/login">Already have an account? Log in </Link>
                 </div>
             </div>
         </form>

@@ -3,11 +3,13 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import prisma from "@/lib/prisma"
 import bcrypt from "bcryptjs"
+import React from "react"
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
-    strategy: 'jwt'
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   pages: {
     signIn: '/login',
@@ -41,7 +43,7 @@ export const authOptions: NextAuthOptions = {
         // If no error and we have user data, return it
         return {
           id: `${user.id}`,
-          username: user.username,
+          name: user.username,
           email: user.email,
         };
       }
