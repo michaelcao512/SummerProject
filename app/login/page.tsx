@@ -1,5 +1,5 @@
 'use client'
-import LoginForm from "./LoginForm"
+import LoginForm from "../../components/forms/LoginForm"
 import "./login.css"
   
 export default function LoginPage() {

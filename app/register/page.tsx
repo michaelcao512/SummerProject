@@ -1,6 +1,6 @@
 'use client'
 import Link from "next/link"
-import RegisterForm from "./RegisterForm"
+import RegisterForm from "../../components/forms/RegisterForm"
 import "./register.css"
 
 export default function RegisterPage() {

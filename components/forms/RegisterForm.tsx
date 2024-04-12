@@ -6,20 +6,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { useFormState } from "react-dom";
-import { z } from "zod";
+import { validateFormAction } from "@/lib/validation";
 
-type FormState = {
-    formData: {
-        username: string;
-        email: string;
-        password: string;
-    }
-    buttonDisabled: boolean;
-    usernameError?: string;
-    emailError?: string;
-    passwordError?: string;
-};
-const initialState: FormState = {
+const initialState: RegisterFormState = {
     formData: {
         username: '',
         email: '',
@@ -31,100 +20,24 @@ const initialState: FormState = {
     passwordError: '',
 };
 
-// validation schema
-const schema = z.object({
-    username: z.string()
-        .min(1, { message: "This field is required" })
-        .min(3, { message: "Too short. Must be greater 3 characters " })
-        .max(15, { message: "Too long. Must be less than 15 characters" }),
-    email: z.string()
-        .min(1, { message: "This field is required" })
-        .email(),
-    password: z.string()
-        .min(1, { message: "This field is required" })
-        .min(6, { message: "Password is too short. Must be greater 6 characters" })
-        .max(50, { message: "Password is too long. Must be less 50 characters" })
-});
-
-async function validateData(formState: FormState) {
-    const username = formState.formData.username;
-    const email = formState.formData.email;
-    const password = formState.formData.password;
-
-    const result = schema.safeParse({
-        username: username,
-        email: email,
-        password: password
-    });
-
-    if (!result.success) {
-        const fieldError = result.error.flatten().fieldErrors;
-        let err = {
-            buttonDisabled: false,
-            usernameError: '',
-            emailError: '',
-            passwordError: '',
-        };
-        for (const [field, error] of Object.entries(fieldError)) {
-            err = {
-                ...err,
-                buttonDisabled: true,
-                [`${field}Error`]: error[0]
-            }
-        }
-        return err;
-    }
-    return {};
-
-}
-
-
-async function validateFormAction(prevState: FormState, formData: FormData) {
-    const username = formData.get('username') as string;
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-
-    let formState = {
-        ...prevState,
-        formData: {
-            username: username ,
-            email: email,
-            password: password,
-        },
-    };
-    
-    const errors = await validateData(formState);
-    if (Object.keys(errors).length > 0) {
-        return {
-            ...prevState,
-            ...errors
-        };
-    }
-    const newState = {
-        ...formState,
-        buttonDisabled: false,
-        usernameError: '',
-        emailError: '',
-        passwordError: '',
-    }
-    return newState;
-}
-    
-type interactedFields = {
-    username: boolean;
-    email: boolean;
-    password: boolean;
-};
-
 function RegisterForm() {
-    const [userRegistered, setUserRegistered] = useState(false);
     const [formState, formAction] = useFormState(validateFormAction, initialState);
     const [error, setError] = useState(''); 
+
+    // interacted fields for displaying error messages
     const [interactedFields, setInteractedFields] = useState({
         username: false,
         email: false,
         password: false,
     });
+
+    // after user registered redirect to login page
+    const [userRegistered, setUserRegistered] = useState(false);
+    useEffect(() => {
+        if (userRegistered) {
+            redirect('/login');
+        }
+    }, [userRegistered]);
 
     // input handling for form validation
     async function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -134,13 +47,6 @@ function RegisterForm() {
         const FD = new FormData(event.target.form as HTMLFormElement);
         formAction(FD);
     }
-
-    // after user registered redirect to login page
-    useEffect(() => {
-        if (userRegistered) {
-            redirect('/login');
-        }
-    }, [userRegistered]);
 
     // submit form
     async function handleSubmit() {
@@ -170,6 +76,7 @@ function RegisterForm() {
             setError("Email already exists");
             return;
         }
+
 
         const user = await fetch('api/users/register', {
             method: 'POST',
