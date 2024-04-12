@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { signIn } from "next-auth/react"
@@ -7,31 +7,40 @@ import Link from "next/link";
 
 function LoginForm() {
     const [details, setDetails] = useState({ email: "", password: "" });
+    const [error, setError] = useState("");
+
+    const [loggedIn, setLoggedIn] = useState(false);
+    useEffect(() => {
+        if (loggedIn) {
+            redirect('/');
+        }
+    }, [loggedIn]);
 
 
     async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         console.log('logging in')        
-        // const signInData = await signIn('credentials', {
-        //     email: details.email,
-        //     password: details.password,
-        //     redirect: false
-        // });
+        const signInData = await signIn('credentials', {
+            email: details.email,
+            password: details.password,
+            redirect: false
+        });
 
-
-        // if (signInData?.error) {
-        //     console.log('error ')
-        //     console.log(signInData.error);
-        // } else {
-        //     console.log('logged in')
-        //     redirect('/');
-        // }
+        console.log(signInData);
+        if (signInData?.error) {
+            setError("Invalid email or password")
+        } else {
+            console.log('logged in')
+            setLoggedIn(true);
+        }
 
     };
 
     return (
         <form onSubmit={handleLogin}>
             <div className="form-inner">
+                <span className="text-red-500 uppercase">  {error}</span>
+
                 <div className="form-group">
                     <label htmlFor="username">Email:
                         <Input type="username" id="email" name="email" onChange={e => setDetails({ ...details, email: e.target.value })} value={details.email} />

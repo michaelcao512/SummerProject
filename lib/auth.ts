@@ -9,9 +9,9 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt'
   },
-  // pages: {
-  //   signIn: '/login',
-  // },
+  pages: {
+    signIn: '/login',
+  },
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -40,7 +40,7 @@ export const authOptions: NextAuthOptions = {
 
         // If no error and we have user data, return it
         return {
-          id: `{user.id}`,
+          id: `${user.id}`,
           username: user.username,
           email: user.email,
         };
