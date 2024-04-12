@@ -12,6 +12,7 @@ import {
 
 import React, { useState } from "react"
 import "./flashcards.css"
+import { getServerSession } from "next-auth"
 
 //   export default function Home() {
 
@@ -60,7 +61,11 @@ function Card(props: {frontside?: string, backside?: string}) {
     return <div className="flash-card" onClick={handleClick}>{text}</div>
 }
 
-export default function App() {
+export default async function HomePage() {
+    const session = await getServerSession();
+    if (!session) {
+        return (<p>NOT AUTHORIZED</p>)
+    }
     return (
         <div className="App">
                 <h1>FLASHCARDS</h1>

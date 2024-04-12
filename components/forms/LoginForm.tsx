@@ -5,14 +5,14 @@ import { signIn } from "next-auth/react"
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
-function LoginForm() {
+export default function LoginForm() {
     const [details, setDetails] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
 
     const [loggedIn, setLoggedIn] = useState(false);
     useEffect(() => {
         if (loggedIn) {
-            redirect('/');
+            redirect('/about');
         }
     }, [loggedIn]);
 
@@ -26,7 +26,6 @@ function LoginForm() {
             redirect: false
         });
 
-        console.log(signInData);
         if (signInData?.error) {
             setError("Invalid email or password")
         } else {
@@ -61,5 +60,3 @@ function LoginForm() {
         </form>
     )
 }
-
-export default LoginForm
