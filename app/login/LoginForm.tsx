@@ -1,38 +1,40 @@
 import React, { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { signIn } from "next-auth/react"
+import { redirect } from "next/navigation";
+import Link from "next/link";
 
 function LoginForm() {
-    const [details, setDetails] = useState({ username: "", password: "" });
+    const [details, setDetails] = useState({ email: "", password: "" });
 
 
-    const handleLogin = async () => {
-        try {
-            const username = details.username;
-            const password = details.password;
+    async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        console.log('logging in')        
+        // const signInData = await signIn('credentials', {
+        //     email: details.email,
+        //     password: details.password,
+        //     redirect: false
+        // });
 
-            const response = await fetch('http://127.0.0.1:3001/', {
-                method: 'GET',   
-            });
-            const data = response.json();
-            alert(data);
 
-            if (response.ok) {
-                alert('Login successful!');
-                // Handle the token (e.g., store it in localStorage) for future requests
-            } else {
-                alert('Login failed. Please check your credentials.');
-            }
-        } catch (error) {
-            console.error('Error during login:', error);
-        }
+        // if (signInData?.error) {
+        //     console.log('error ')
+        //     console.log(signInData.error);
+        // } else {
+        //     console.log('logged in')
+        //     redirect('/');
+        // }
+
     };
+
     return (
         <form onSubmit={handleLogin}>
             <div className="form-inner">
                 <div className="form-group">
-                    <label htmlFor="username">Username:
-                        <Input type="username" id="username" name="username" onChange={e => setDetails({ ...details, username: e.target.value })} value={details.username} />
+                    <label htmlFor="username">Email:
+                        <Input type="username" id="email" name="email" onChange={e => setDetails({ ...details, email: e.target.value })} value={details.email} />
                     </label>
                 </div>
                 <div className="form-group">
@@ -41,12 +43,10 @@ function LoginForm() {
                     </label>
                 </div>
                 <div className="LoginBody">
-                    <a href="./app">
-                        <Button >Login</Button>
-                    </a>
-                    <a href="./register">
-                        <p> Don't have an account? Sign up</p>
-                    </a>
+                    <Button type="submit">Login</Button>
+                    <Link href="/register">
+                        Don't have an account? Sign up
+                    </Link>
                 </div>
             </div>
         </form>

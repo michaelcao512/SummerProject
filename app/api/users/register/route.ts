@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import { NextResponse, NextRequest } from "next/server";
 import bcyrpt from "bcryptjs";
 
@@ -17,10 +18,10 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({ message: "user created", user });
     } catch (error: any) {
-        console.error('Failed to create user', error)
-        if (error.code === 'P2002' && error.meta?.target?.includes('email')) {
-            return NextResponse.json({ error: 'Email already exists', errorMessage: error }, { status: 400 });
-        } else {
+        if (error.code === 'P2002') {
+            return NextResponse.json({ error: 'Username or email already exists' }, { status: 400 });
+        }
+        else {
             return NextResponse.json({ error: 'Failed to create user', errorMessage: error }, { status: 500 });
         }
     }
